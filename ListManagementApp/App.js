@@ -45,7 +45,4 @@ const styles = StyleSheet.create({
     borderBottomColor: "#ccc",
   },
 });
-// This code is a simple React Native app that allows users to manage a list of items.
-// It uses the useState hook to manage the state of the items and the FlatList component to display them.
-// The app has a button to add new items to the list, and each item is displayed with its name.
-// The styles are defined using StyleSheet to create a clean and organized layout.
+//base code for list management app - easily add text box and make it a specific thing and bada bing bada boom
