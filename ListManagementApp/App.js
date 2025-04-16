@@ -1,27 +1,36 @@
 import React, { useState} from "react";
-import { View, Text, StyleSheet, Button, FlatList } from "react-native";
+import { View, Text, StyleSheet, Button, FlatList, TextInput } from "react-native";
 
 export default function App() {
-  const [items, setItems] = useState([
-    { id: "1", name: "Item 1" },
-    { id: "2", name: "Item 2" },
-    { id: "3", name: "Item 3" },
-  ]);
+  const [items, setItems] = useState([]);
+  const [inputValue, setInputValue] = useState("");
 
   const addItem = () => {
-    const newItem = { id: Date.now().toString(), name: `Item ${items.length + 1}` };
-    setItems((prevItems) => [...prevItems, newItem]);
+    if (inputValue.trim()) {
+      const newItem = { id: Date.now().toString(), name: inputValue };
+      setItems((prevItems) => [...prevItems, newItem]);
+      setInputValue("");
+    }
   };
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>List Management App</Text>
+      <TextInput
+        style={styles.input}
+        placeholder="Enter Item Name"
+        value={inputValue}
+        onChangeText={text => setInputValue(text)}
+      />
       <Button title="Add Item" onPress={addItem} />
       <FlatList
         data={items}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => <Text style={styles.item}>{item.name}</Text>}
       />
+      <Button style={styles.button} title="Clear List" onPress={() => setItems([])} />
+      <Button style={styles.button} title="Remove Last Item" onPress={() => setItems((prevItems) => prevItems.slice(0, -1))} />
+
     </View>
   );
 }
@@ -44,5 +53,10 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: "#ccc",
   },
+  button:{
+      marginBottom: 100,
+      backgroundColor: "#888888",
+      color: "#fff",
+    },
 });
 //base code for list management app - easily add text box and make it a specific thing and bada bing bada boom
