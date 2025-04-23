@@ -8,6 +8,7 @@ import {
   removeLastLocalItem,
 } from "../database/database";
 import { addBirdToCloud } from "../database/firebaseDatabase";
+import AutoCompleteInput from "../components/autoCompleteInput";
 
 export default function HomeScreen() {
   const [birdList, setBirdList] = useState([]);
@@ -52,12 +53,8 @@ export default function HomeScreen() {
   return (
     <View style={{ flex: 1 }}>
       <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.input}
-          placeholder="Enter bird name"
-          value={inputValue}
-          onChangeText={setInputValue}
-        />
+      <AutoCompleteInput inputStyle={styles.input} onBirdSelect={setInputValue} />
+
         <Button title="Add Bird" onPress={addBird} />
         <Button title="Clear Today's Birds" onPress={clearLocalBirds} />
         <Button title="Remove Last Bird" onPress={handleRemoveLastBird} />

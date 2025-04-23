@@ -40,14 +40,16 @@ npm install firebase
 Structure
 .
 ├── App.js                           # Entry point with drawer navigation
-├── firebaseConfig.js               # Firebase app config and Firestore setup
+├── firebaseConfig.js               #Config external database using Google's free firebase database
 
 ├── /components
-│   └── BirdListView.js             # Reusable component to display bird lists (title + FlatList)
+│   └── BirdListView.js             #Trying to follow good coding principles/Iskof
+|   └── autoCompleteInput.js        #Take in eBird database and display the first 10 birds for easy identification -
 
 ├── /database
-│   ├── database.js                 # AsyncStorage for local bird list (local-only, today)
-│   └── firebaseDatabase.js         # Firebase Firestore integration (all-time bird log)
+│   ├── database.js                 #AsyncStorage for local bird list (local-only, today)
+│   └── firebaseDatabase.js         #Firebase Firestore integration (all-time bird log)
+|   └── eBirdAPI.js                 #eBird API connection - Cornell's free bird API (used their current app as inspiration)
 
 ├── /screens
 │   ├── HomeScreen.js               # Main screen: Add birds to local list + sync to cloud
@@ -55,7 +57,8 @@ Structure
 
 
 To Use:
-1. Enter bird name in text box and click 'add bird' button
+1. Start typing a bird name in the text field, click and select desired bird from dropdown.
+2. Click Add Bird button to add the bird to todays (and external) database
 2. Select hamburger menu on top left of screen to select 'Database' screen
 3. Review to ensure newly added bird is in the database
 4. If desired, return to homescreen to add more birds or select 'clear today's birds' or 'remove last bird' to remove birds from today's list*
