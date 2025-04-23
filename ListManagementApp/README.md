@@ -37,7 +37,8 @@ npm install firebase
 - npm start
 - a
 
-Structure
+Structure:
+
 .
 ├── App.js                           # Entry point with drawer navigation
 ├── firebaseConfig.js               #Config external database using Google's free firebase database
