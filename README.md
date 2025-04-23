@@ -10,7 +10,7 @@ This application is design for Andriod users with a passion for bird watching. T
 
 This app is a simple list tool for a user to add the birds they have seen today to their list. They can add and remove birds.
 
-Features
+### Features
 - Add Birds to List
 - Remove Last Bird
 - Clear all Birds from List
@@ -18,7 +18,7 @@ Features
 - Navigation using Hamburger
 - Storage using AsyncStorage
 
-Install and Setup
+#### Install and Setup
 
 1. Clone Repository
 bash git clone https://github.com/xavier1195/INFO670.git
@@ -39,7 +39,7 @@ npm install firebase
 - npm start
 - a
 
-Structure:
+#### Structure:
 
 .
 ├── App.js                           # Entry point with drawer navigation
@@ -59,7 +59,7 @@ Structure:
 │   └── DatabaseScreen.js           # Display synced list from Firebase (all birds ever logged)
 
 
-To Use:
+### To Use:
 1. Start typing a bird name in the text field, click and select desired bird from dropdown.
 2. Click Add Bird button to add the bird to todays (and external) database
 2. Select hamburger menu on top left of screen to select 'Database' screen
@@ -67,7 +67,7 @@ To Use:
 4. If desired, return to homescreen to add more birds or select 'clear today's birds' or 'remove last bird' to remove birds from today's list*
 *Removing birds only removes them from the current bird list an not external database (or databse screen)
 
-Future State:
+### Future State:
 - Update Autocomplete to possibly allow non-eBird birds
 - Add Latin name and other bird info from ebird API
 - Possibility to create a bird and add information to database AND suplment that into the dropdown autocomplete
