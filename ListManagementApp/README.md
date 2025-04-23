@@ -63,3 +63,10 @@ To Use:
 3. Review to ensure newly added bird is in the database
 4. If desired, return to homescreen to add more birds or select 'clear today's birds' or 'remove last bird' to remove birds from today's list*
 *Removing birds only removes them from the current bird list an not external database (or databse screen)
+
+Future State:
+- Update Autocomplete to possibly allow non-eBird birds
+- Add Latin name and other bird info from ebird API
+- Possibility to create a bird and add information to database AND suplment that into the dropdown autocomplete
+- Add bird pictures
+- Add location
