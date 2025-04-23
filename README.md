@@ -1,6 +1,5 @@
-#Read Me
-
-##Bird's I've Seen Today App
+##Read Me
+Bird's I've Seen Today App
 
 Application Purpose:
 This application is designed to allow a user to input birds they have seen throughout the day into a running list. They are able to add and remove birds from the list. The current day list displays bird name and time list item was added. It also connects to an external database which allows the user to see a running lists of every bird they have inputed using the app and displays them in an addtional screen called 'database'. This will show the user the bird name and timestamp for easy bird tracking.
