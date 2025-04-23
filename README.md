@@ -18,7 +18,7 @@ This app is a simple list tool for a user to add the birds they have seen today 
 - Navigation using Hamburger
 - Storage using AsyncStorage
 
-#### Install and Setup
+### Install and Setup
 
 1. Clone Repository
 bash git clone https://github.com/xavier1195/INFO670.git
@@ -39,24 +39,24 @@ npm install firebase
 - npm start
 - a
 
-#### Structure:
+### Structure:
 
-.
-├── App.js                           # Entry point with drawer navigation
-├── firebaseConfig.js               #Config external database using Google's free firebase database
+.<br>
+├── App.js                           # Entry point with drawer navigation<br>
+├── firebaseConfig.js               #Config external database using Google's free firebase database<br>
 
-├── /components
-│   └── BirdListView.js             #Trying to follow good coding principles/Iskof
-|   └── autoCompleteInput.js        #Take in eBird database and display the first 10 birds for easy identification -
+├── /components<br>
+│   └── BirdListView.js             #Trying to follow good coding principles/Iskof<br>
+|   └── autoCompleteInput.js        #Take in eBird database and display the first 10 birds for easy identification<br>
 
-├── /database
-│   ├── database.js                 #AsyncStorage for local bird list (local-only, today)
-│   └── firebaseDatabase.js         #Firebase Firestore integration (all-time bird log)
-|   └── eBirdAPI.js                 #eBird API connection - Cornell's free bird API (used their current app as inspiration)
+├── /database<br>
+│   ├── database.js                 #AsyncStorage for local bird list (local-only, today)<br>
+│   └── firebaseDatabase.js         #Firebase Firestore integration (all-time bird log)<br>
+|   └── eBirdAPI.js                 #eBird API connection - Cornell's free bird API (used their current app as inspiration)<br>
 
-├── /screens
-│   ├── HomeScreen.js               # Main screen: Add birds to local list + sync to cloud
-│   └── DatabaseScreen.js           # Display synced list from Firebase (all birds ever logged)
+├── /screens<br>
+│   ├── HomeScreen.js               # Main screen: Add birds to local list + sync to cloud<br>
+│   └── DatabaseScreen.js           # Display synced list from Firebase (all birds ever logged)<br>
 
 
 ### To Use:
