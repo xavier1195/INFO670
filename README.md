@@ -42,21 +42,21 @@ npm install firebase
 ### Structure:
 
 .<br>
-├── App.js                           # Entry point with drawer navigation<br>
-├── firebaseConfig.js               #Config external database using Google's free firebase database<br>
+├── App.js        -------------------                  # Entry point with drawer navigation<br>
+├── firebaseConfig.js        -------------------       #Config external database using Google's free firebase database<br>
 
 ├── /components<br>
-│   └── BirdListView.js             #Trying to follow good coding principles/Iskof<br>
-|   └── autoCompleteInput.js        #Take in eBird database and display the first 10 birds for easy identification<br>
+│   └── BirdListView.js        -------------------     #Trying to follow good coding principles/Iskof<br>
+|   └── autoCompleteInput.js    -------------------    #Take in eBird database and display the first 10 birds for easy identification<br>
 
 ├── /database<br>
-│   ├── database.js                 #AsyncStorage for local bird list (local-only, today)<br>
-│   └── firebaseDatabase.js         #Firebase Firestore integration (all-time bird log)<br>
-|   └── eBirdAPI.js                 #eBird API connection - Cornell's free bird API (used their current app as inspiration)<br>
+│   ├── database.js           -------------------     #AsyncStorage for local bird list (local-only, today)<br>
+│   └── firebaseDatabase.js   -------------------     #Firebase Firestore integration (all-time bird log)<br>
+|   └── eBirdAPI.js          -------------------      #eBird API connection - Cornell's free bird API (used their current app as inspiration)<br>
 
 ├── /screens<br>
-│   ├── HomeScreen.js               # Main screen: Add birds to local list + sync to cloud<br>
-│   └── DatabaseScreen.js           # Display synced list from Firebase (all birds ever logged)<br>
+│   ├── HomeScreen.js        -------------------       # Main screen: Add birds to local list + sync to cloud<br>
+│   └── DatabaseScreen.js    -------------------       # Display synced list from Firebase (all birds ever logged)<br>
 
 
 ### To Use:
