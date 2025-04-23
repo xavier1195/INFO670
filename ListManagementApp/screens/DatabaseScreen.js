@@ -1,53 +1,26 @@
-import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, FlatList } from "react-native";
-import { loadItems } from "../database"; // Import your database functions
+import React, { useState, useEffect, use } from "react";
+import { View } from "react-native";
+import { getBirdsFromCloud } from "../database/firebaseDatabase"; // Import your database functions
+import BirdListView from "../components/BirdListView";
 
 export default function DatabaseScreen() {
-    const [storedItems, setStoredItems] = useState([]);
+    const [birdsLog, setBirdsLog] = useState([]);
 
     useEffect(() => {
-        const fetchData = async () => {
-            const data = await loadItems();
-            setStoredItems(data);
+        const getData = async () => {
+            const data = await getBirdsFromCloud();
+            setBirdsLog(data);
         };
-        fetchData();
-    }
-    , []);
+        getData();
+    }, []);
 
     return (
-        <View style={styles.container}>
-            <Text style={styles.title}>Database Screen</Text>
-            {storedItems.length === 0 ? (
-                <Text style={styles.emptyList}>No items found.</Text>
-            ) : (
-                <FlatList
-                    data={storedItems}
-                    keyExtractor={(item) => item.id}
-                    renderItem={({ item }) => <Text style={styles.item}>{item.name}</Text>}
-                />
-            )}
-            </View>
+        <View style={{ flex: 1 }}>
+            <BirdListView
+                title="Birds Log"
+                birds={birdsLog}
+                emptyMessage="No birds logged yet."
+            />
+        </View>
     );
 }
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        padding: 20,
-        backgroundColor: "#fff",
-    },
-    title: {
-        fontSize: 24,
-        fontWeight: "bold",
-        marginBottom: 20,
-    },
-    item: {
-        fontSize: 18,
-        paddingVertical: 10,
-    },
-    emptyList: {
-        fontSize: 18,
-        color: "#888",
-    },
-});
-
-
