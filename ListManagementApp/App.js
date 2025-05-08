@@ -4,6 +4,8 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 
 import HomeScreen from "./screens/HomeScreen";
 import DatabaseScreen from "./screens/DatabaseScreen";
+import ProfileScreen from "./screens/ProfileScreen";
+import FlockBirdsScreen from "./screens/FlocksScreen";
 
 const Drawer = createDrawerNavigator();
 
@@ -13,6 +15,9 @@ export default function App() {
       <Drawer.Navigator initialRouteName="Home">
         <Drawer.Screen name="Home" component={HomeScreen} />
         <Drawer.Screen name="Database" component={DatabaseScreen} />
+        <Drawer.Screen name="Flock Birds" component={FlockBirdsScreen} />
+
+        <Drawer.Screen name="Profile" component={ProfileScreen} />
       </Drawer.Navigator>
     </NavigationContainer>
   );
