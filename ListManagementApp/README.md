@@ -20,58 +20,74 @@ This app is a simple list tool for a user to add the birds they have seen today 
 
 ### Install and Setup
 
-1. Clone Repository
-bash git clone https://github.com/xavier1195/INFO670.git
+# 1. Clone Repository
+git clone https://github.com/xavier1195/INFO670.git
 cd ListManagementApp
 
-2. Install dependencies
+# 2. Install dependencies
 npm install
 npm install -g expo-cli
 
-3. Install Required Packages
+# 3. Install Required Packages
 npx expo install @react-navigation/native
 npx expo install @react-navigation/drawer
 npx expo install react-native-gesture-handler react-native-reanimated react-native-screens react-native-safe-area-context @react-native-masked-view/masked-view
 npx expo install @react-native-async-storage/async-storage
-npm install firebase
 npx expo install expo-checkbox
+npm install firebase
 
+# 4. Run the App
+npm start
 
-4. Run App
-- npm start
-- a
 
 ### Structure:
 
-.<br>
-├── App.js        -----------------------                 # Entry point with drawer navigation<br>
-├── firebaseConfig.js        -------------------       #Config external database using Google's free firebase database<br>
+.
+├── App.js                          # Entry point with drawer navigation
+├── firebaseConfig.js              # Firebase setup for Firestore backend
 
-├── /components<br>
-│   └── BirdListView.js        -------------------     #Trying to follow good coding principles/Iskof<br>
-|   └── autoCompleteInput.js    -------------------    #Take in eBird database and display the first 10 birds for easy identification<br>
+├── /components
+│   ├── BirdListView.js            # Shared bird list component
+│   ├── FlockBirdItem.js           # View for flock bird display
+│   ├── autoCompleteInput.js       # Dropdown search from eBird API
 
-├── /database<br>
-│   ├── database.js           -------------     #AsyncStorage for local bird list (local-only, today)<br>
-│   └── firebaseDatabase.js   -------------    #Firebase Firestore integration (all-time bird log)<br>
-|   └── eBirdAPI.js          -------------      #eBird API connection - Cornell's free bird API (used their current app as inspiration)<br>
+├── /database
+│   ├── database.js                # AsyncStorage logic
+│   ├── firebaseDatabase.js        # Cloud CRUD for birds
+│   ├── eBirdAPI.js                # Bird autocomplete suggestions
+│   ├── getFlockBirds.js           # Fetch birds from users in your flocks
+│   ├── getScientificName.js       # Get Latin name from eBird
+│   └── getWikapediaImage.js       # Get image using Wikipedia API
 
-├── /screens<br>
-│   ├── HomeScreen.js        -------------------       # Main screen: Add birds to local list + sync to cloud<br>
-│   └── DatabaseScreen.js    ----------------       # Display synced list from Firebase (all birds ever logged)<br>
+├── /screens
+│   ├── HomeScreen.js              # Bird input form and today’s bird list
+│   ├── DatabaseScreen.js          # All logged birds from cloud
+│   ├── ProfileScreen.js           # Signup/Login, favorite bird, flock selection
+│   └── FlocksScreen.js            # View birds from users in your same flock(s)
+
 
 
 ### To Use:
-1. Start typing a bird name in the text field, click and select desired bird from dropdown.
-2. Click Add Bird button to add the bird to todays (and external) database
-2. Select hamburger menu on top left of screen to select 'Database' screen
-3. Review to ensure newly added bird is in the database
-4. If desired, return to homescreen to add more birds or select 'clear today's birds' or 'remove last bird' to remove birds from today's list*
-*Removing birds only removes them from the current bird list an not external database (or databse screen)
+Navigate to Home screen.
+
+1. ype a bird name in the search box. Select a result from the dropdown.
+
+2. Click Add Bird to save it locally and remotely.
+
+3. Tap the ☰ hamburger menu to view the Database screen to see all saved birds.
+
+4. Go to Profile to create a user with username/email/favorite bird and join one or more Flocks.
+
+5. Visit the Flocks screen to see birds added by other users in the same flocks.
 
 ### Future State:
 - Update Autocomplete to possibly allow non-eBird birds
-- Add Latin name and other bird info from ebird API
+- Caching for Wikapedia images and latin names to speed up app
 - Possibility to create a bird and add information to database AND suplment that into the dropdown autocomplete
-- Add bird pictures
+- Bird states, number of 'seen', historical context related birds ect.
+- notifications for sightings within your 'flock'
+- peer to peer messaging and collaboration
 - Add location
+- ML name suggestions based on bird photo upload
+- audio for birds
+- ML audio to bird suggestion
