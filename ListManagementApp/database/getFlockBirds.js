@@ -47,5 +47,25 @@ export const getFlockBirds = async () => {
     })
   );
 
-  return enriched;
+  return {
+    flock: currentUser.flocks[0] || "Your Flock",
+    birds: await Promise.all(
+      birds.map(async (bird) => {
+        const user = sameFlockUsers.find((u) => u.id === bird.userId);
+        const image = await getWikipediaImage(bird.name);
+        const sci = await getScientificName(bird.name);
+        return {
+          id: bird.timestamp?.seconds?.toString() || bird.id,
+          name: bird.name,
+          sciName: sci,
+          image,
+          username: user.username,
+          timestamp: bird.timestamp,
+        };
+      })
+    ),
+  };
+
+
+
 };

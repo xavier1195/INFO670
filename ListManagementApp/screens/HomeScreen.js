@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, Button, TextInput } from "react-native";
+import { useFocusEffect } from "@react-navigation/native";
 import BirdListView from "../components/BirdListView";
 import {
   saveLocalList,
@@ -10,17 +11,20 @@ import {
 import { addBirdToCloud } from "../database/firebaseDatabase";
 import AutoCompleteInput from "../components/autoCompleteInput";
 
+
 export default function HomeScreen() {
   const [birdList, setBirdList] = useState([]);
   const [inputValue, setInputValue] = useState("");
 
-  useEffect(() => {
-    const getBirdList = async () => {
-      const storedLocal = await loadLocalItems();
-      setBirdList(storedLocal);
-    };
-    getBirdList();
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      const getBirdList = async () => {
+        const storedLocal = await loadLocalItems();
+        setBirdList(storedLocal);
+      };
+      getBirdList();
+    }, [])
+  );
 
   const addBird = async () => {
     if (inputValue.trim()) {
@@ -63,6 +67,7 @@ export default function HomeScreen() {
         title="Birds I've Seen Today"
         birds={birdList}
         emptyMessage="No birds seen today."
+        showTimestamp={false}
       />
     </View>
   );

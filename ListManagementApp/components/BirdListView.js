@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text, StyleSheet, FlatList } from "react-native";
 import BirdListItem from "./BirdListItem.js";
 
-export default function BirdListView({ title, birds, emptyMessage }) {
+export default function BirdListView({ title, birds, emptyMessage, showTimestamp = true }) {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{title}</Text>
@@ -12,7 +12,7 @@ export default function BirdListView({ title, birds, emptyMessage }) {
         <FlatList
           data={birds}
           keyExtractor={(item) => item.id}
-          renderItem={({ item }) => <BirdListItem bird={item} />}
+          renderItem={({ item }) => <BirdListItem bird={item} showTimestamp={showTimestamp} />}
         />
       )}
     </View>

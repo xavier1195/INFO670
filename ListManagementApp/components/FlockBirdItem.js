@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet, Image } from "react-native";
 
+
 export default function FlockBirdItem({ bird }) {
   return (
     <View style={styles.card}>
@@ -12,6 +13,8 @@ export default function FlockBirdItem({ bird }) {
         <Text style={styles.username}>{bird.username}</Text>
         <Text style={styles.name}>{bird.name}</Text>
         <Text style={styles.latin}>{bird.sciName}</Text>
+        <Text style={styles.timestamp}>{bird.timestamp?.toDate().toLocaleString() || "Date unknown"}</Text>
+
       </View>
     </View>
   );

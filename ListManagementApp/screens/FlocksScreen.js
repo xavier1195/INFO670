@@ -1,55 +1,178 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, FlatList, ActivityIndicator } from "react-native";
+import {
+  View,
+  Text,
+  FlatList,
+  TextInput,
+  Button,
+  StyleSheet,
+  ActivityIndicator,
+} from "react-native";
 import { getFlockBirds } from "../database/getFlockBirds";
+import { getFlockMessages, addFlockMessage, addReplyToMessage, getRepliesForMessage } from "../database/flockMessages";
 import FlockBirdItem from "../components/FlockBirdItem";
 
-export default function FlocksScreen() {
+export default function FlockScreen() {
   const [birds, setBirds] = useState([]);
+  const [flockName, setFlockName] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [messages, setMessages] = useState([]);
+  const [newMessage, setNewMessage] = useState("");
+  const [replyingTo, setReplyingTo] = useState(null);
+  const [replyText, setReplyText] = useState("");
+  const [replies, setReplies] = useState({});
+
 
   useEffect(() => {
-    const loadBirds = async () => {
+    const fetchData = async () => {
       try {
-        const data = await getFlockBirds();
-        setBirds(data);
+        const { birds: flockBirds, flock } = await getFlockBirds();
+        setBirds(flockBirds);
+        setFlockName(flock);
+
+        const loadedMessages = await getFlockMessages(flock);
+        setMessages(loadedMessages);
       } catch (error) {
-        console.error("Error loading flock birds:", error);
+        console.error("Failed to load flock info:", error);
       } finally {
         setLoading(false);
       }
+      const repliesObj = {};
+for (let msg of loadedMessages) {
+  repliesObj[msg.id] = await getRepliesForMessage(flock, msg.id);
+}
+setReplies(repliesObj);
+
     };
 
-    loadBirds();
+    fetchData();
   }, []);
 
-  if (loading) return <ActivityIndicator style={{ marginTop: 40 }} />;
+  const handleSendMessage = async () => {
+    if (!newMessage.trim()) return;
+
+    try {
+      await addFlockMessage(flockName, newMessage);
+      const updated = await getFlockMessages(flockName);
+      setMessages(updated);
+      setNewMessage("");
+    } catch (error) {
+      console.error("Failed to send message:", error);
+    }
+  };
+
+  const handleSendReply = async (messageId) => {
+    if (!replyText.trim()) return;
+
+    try {
+      await addReplyToMessage(flockName, messageId, replyText);
+      const newReplies = await getRepliesForMessage(flockName, messageId);
+      setReplies((prev) => ({ ...prev, [messageId]: newReplies }));
+      setReplyText("");
+      setReplyingTo(null);
+    } catch (error) {
+      console.error("Failed to send reply:", error);
+    }
+  };
+
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Birds from Your Flocks</Text>
-      {birds.length === 0 ? (
-        <Text style={styles.empty}>No birds found from your flocks.</Text>
+      <Text style={styles.title}>
+        {flockName ? `Your Flock ${flockName} is Flapping!` : "Loading Flock..."}
+      </Text>
+
+      {loading ? (
+        <ActivityIndicator size="large" />
       ) : (
-        <FlatList
-          data={birds}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item }) => <FlockBirdItem bird={item} />}
-        />
+        <>
+          <FlatList
+            data={birds}
+            keyExtractor={(item) => item.id}
+            renderItem={({ item }) => <FlockBirdItem bird={item} />}
+          />
+
+          <Text style={styles.sectionTitle}>Flock Messages</Text>
+          <FlatList
+  data={messages}
+  keyExtractor={(item) => item.id}
+  renderItem={({ item }) => (
+    <View style={styles.message}>
+      <Text style={styles.messageUser}>{item.username}:</Text>
+      <Text>{item.message}</Text>
+
+      {/* Replies */}
+      {replies[item.id]?.map((reply) => (
+        <View key={reply.id} style={styles.reply}>
+          <Text style={styles.replyUser}>{reply.username}:</Text>
+          <Text>{reply.reply}</Text>
+        </View>
+      ))}
+
+      {/* Reply input */}
+      {replyingTo === item.id ? (
+        <View style={styles.replyInputArea}>
+          <TextInput
+            style={styles.input}
+            placeholder="Write a reply..."
+            value={replyText}
+            onChangeText={setReplyText}
+          />
+          <Button title="Send" onPress={() => handleSendReply(item.id)} />
+        </View>
+      ) : (
+        <Button title="Reply" onPress={() => setReplyingTo(item.id)} />
+      )}
+    </View>
+  )}
+/>
+
+          <TextInput
+            style={styles.input}
+            placeholder="Send a message to your flock..."
+            value={newMessage}
+            onChangeText={setNewMessage}
+          />
+          <Button title="Send Message" onPress={handleSendMessage} />
+        </>
       )}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 20 },
-  title: {
-    fontSize: 22,
+  container: { padding: 20, flex: 1 },
+  title: { fontSize: 22, fontWeight: "bold", marginBottom: 20 },
+  sectionTitle: { fontSize: 18, fontWeight: "600", marginTop: 20, marginBottom: 10 },
+  message: {
+    paddingVertical: 6,
+    borderBottomWidth: 1,
+    borderBottomColor: "#ccc",
+  },
+  messageUser: {
     fontWeight: "bold",
-    marginBottom: 15,
+    marginBottom: 2,
   },
-  empty: {
-    fontSize: 16,
-    marginTop: 20,
-    color: "#777",
+  input: {
+    borderWidth: 1,
+    borderColor: "#aaa",
+    borderRadius: 5,
+    padding: 10,
+    marginTop: 10,
+    marginBottom: 10,
   },
+  reply: {
+    paddingLeft: 12,
+    borderLeftWidth: 2,
+    borderColor: "#ddd",
+    marginTop: 4,
+  },
+  replyUser: {
+    fontWeight: "bold",
+    fontSize: 13,
+  },
+  replyInputArea: {
+    marginTop: 6,
+  }
+
 });

@@ -4,7 +4,8 @@ import { getWikipediaImage } from "../database/getWikapediaImage";
 import { getScientificName } from "../database/getScientificName";
 
 
-export default function BirdListItem({ bird }) {
+
+export default function BirdListItem({ bird, showTimestamp = true}) {
   const [imageURL, setImageUrl] = useState(null);
   const [loadingImage, setLoading] = useState(true);
   const [scientificName, setScientificName] = useState(null);
@@ -63,6 +64,11 @@ export default function BirdListItem({ bird }) {
             <ActivityIndicator size="small" />
           ) : (
             <Text style={styles.latinName}>{scientificName || "Latin name not found"}</Text>
+          )}
+          {showTimestamp && (
+            <Text style={styles.timestamp}>
+              {bird.timestamp?.toDate().toLocaleString() || "Date unknown"}
+            </Text>
           )}
         </View>
       </View>

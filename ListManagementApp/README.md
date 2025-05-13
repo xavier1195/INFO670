@@ -44,33 +44,33 @@ npm start
 
 .
 ├── App.js                          # Entry point with drawer navigation
-├── firebaseConfig.js              # Firebase setup for Firestore backend
+├── firebaseConfig.js              # Firebase setup for Firestore
 
 ├── /components
-│   ├── BirdListView.js            # Shared bird list component
-│   ├── FlockBirdItem.js           # View for flock bird display
-│   ├── autoCompleteInput.js       # Dropdown search from eBird API
+│   ├── BirdListView.js            # Displays bird list
+│   ├── FlockBirdItem.js           # Individual bird card in Flocks
+│   ├── autoCompleteInput.js       # eBird-based search dropdown
 
 ├── /database
-│   ├── database.js                # AsyncStorage logic
+│   ├── database.js                # AsyncStorage for local storage
 │   ├── firebaseDatabase.js        # Cloud CRUD for birds
-│   ├── eBirdAPI.js                # Bird autocomplete suggestions
-│   ├── getFlockBirds.js           # Fetch birds from users in your flocks
-│   ├── getScientificName.js       # Get Latin name from eBird
-│   └── getWikapediaImage.js       # Get image using Wikipedia API
+│   ├── eBirdAPI.js                # eBird autocomplete integration
+│   ├── getFlockBirds.js           # Retrieves birds from user's flocks
+│   ├── getScientificName.js       # Gets Latin names from eBird
+│   └── getWikapediaImage.js       # Gets images from Wikipedia
 
 ├── /screens
-│   ├── HomeScreen.js              # Bird input form and today’s bird list
-│   ├── DatabaseScreen.js          # All logged birds from cloud
-│   ├── ProfileScreen.js           # Signup/Login, favorite bird, flock selection
-│   └── FlocksScreen.js            # View birds from users in your same flock(s)
+│   ├── HomeScreen.js              # Main input screen
+│   ├── DatabaseScreen.js          # View all birds logged
+│   ├── ProfileScreen.js           # User login/signup and preferences
+│   └── FlocksScreen.js            # See your Flock's birds and messages
 
 
 
 ### To Use:
 Navigate to Home screen.
 
-1. ype a bird name in the search box. Select a result from the dropdown.
+1. type a bird name in the search box. Select a result from the dropdown.
 
 2. Click Add Bird to save it locally and remotely.
 
@@ -78,7 +78,8 @@ Navigate to Home screen.
 
 4. Go to Profile to create a user with username/email/favorite bird and join one or more Flocks.
 
-5. Visit the Flocks screen to see birds added by other users in the same flocks.
+5. Visit the Flocks screen to see birds added by other users in the same flocks and see messages by others in your Flock (Use Ubran Birds when signing up to see prepopulated Flock)
+
 
 ### Future State:
 - Update Autocomplete to possibly allow non-eBird birds
@@ -91,3 +92,4 @@ Navigate to Home screen.
 - ML name suggestions based on bird photo upload
 - audio for birds
 - ML audio to bird suggestion
+- gamification

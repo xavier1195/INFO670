@@ -1,4 +1,4 @@
-import { collection, addDoc, getDocs } from "firebase/firestore";
+import { collection, addDoc, getDocs, serverTimestamp } from "firebase/firestore";
 import { db } from "../firebirdConfig.js";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -9,10 +9,19 @@ export const addBirdToCloud = async (bird) => {
       const userId = await AsyncStorage.getItem("currentUserId");
       if (!userId) throw new Error("User not logged in");
 
-      const userBirdsRef = collection(db, "users", userId, "birdList");
-      await addDoc(userBirdsRef, bird);
+      const birdWithMetadata = {
+        ...bird,
+        userId,
+        timestamp: serverTimestamp(),
+      };
 
-      console.log("Bird added for user:", userId);
+      // Global list for flocks and search
+      await addDoc(collection(db, BIRD_COLLECTION), birdWithMetadata);
+
+      // User-specific subcollection
+      await addDoc(collection(db, "users", userId, BIRD_COLLECTION), birdWithMetadata);
+
+      console.log("Bird added to global and user log:", birdWithMetadata);
     } catch (error) {
       console.error("Error adding bird to cloud:", error);
     }
@@ -36,3 +45,4 @@ export const addBirdToCloud = async (bird) => {
       return [];
     }
   };
+

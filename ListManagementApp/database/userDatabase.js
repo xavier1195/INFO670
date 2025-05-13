@@ -29,6 +29,7 @@ export const createUser = async (userData) => {
   });
 
   await AsyncStorage.setItem("currentUserId", userRef.id);
+  await AsyncStorage.setItem("currentUsername", userData.username);
   return userRef.id;
 };
 
@@ -40,6 +41,7 @@ export const loginUser = async (username) => {
   }
 
   await AsyncStorage.setItem("currentUserId", user.id);
+  await AsyncStorage.setItem("currentUsername", user.username);
   return user.id;
 };
 
