@@ -42,28 +42,28 @@ npm start
 
 ### Structure:
 
-.
-├── App.js                          # Entry point with drawer navigation
-├── firebaseConfig.js              # Firebase setup for Firestore
+.<br>
+├── App.js                          # Entry point with drawer navigation<br>
+├── firebaseConfig.js              # Firebase setup for Firestore<br>
 
-├── /components
-│   ├── BirdListView.js            # Displays bird list
-│   ├── FlockBirdItem.js           # Individual bird card in Flocks
-│   ├── autoCompleteInput.js       # eBird-based search dropdown
+├── /components<br>
+│   ├── BirdListView.js            # Displays bird list<br>
+│   ├── FlockBirdItem.js           # Individual bird card in Flocks<br>
+│   ├── autoCompleteInput.js       # eBird-based search dropdown<br>
 
-├── /database
-│   ├── database.js                # AsyncStorage for local storage
-│   ├── firebaseDatabase.js        # Cloud CRUD for birds
-│   ├── eBirdAPI.js                # eBird autocomplete integration
-│   ├── getFlockBirds.js           # Retrieves birds from user's flocks
-│   ├── getScientificName.js       # Gets Latin names from eBird
-│   └── getWikapediaImage.js       # Gets images from Wikipedia
+├── /database<br>
+│   ├── database.js                # AsyncStorage for local storage<br>
+│   ├── firebaseDatabase.js        # Cloud CRUD for birds<br>
+│   ├── eBirdAPI.js                # eBird autocomplete integration<br>
+│   ├── getFlockBirds.js           # Retrieves birds from user's flocks<br>
+│   ├── getScientificName.js       # Gets Latin names from eBird<br>
+│   └── getWikapediaImage.js       # Gets images from Wikipedia<br>
 
-├── /screens
-│   ├── HomeScreen.js              # Main input screen
-│   ├── DatabaseScreen.js          # View all birds logged
-│   ├── ProfileScreen.js           # User login/signup and preferences
-│   └── FlocksScreen.js            # See your Flock's birds and messages
+├── /screens<br>
+│   ├── HomeScren.js              # Main input screen<br>
+│   ├── DatabaseScreen.js          # View all birds logged<br>
+│   ├── ProfileScreen.js           # User login/signup and preferences<br>
+│   └── FlocksScreen.js            # See your Flock's birds and messages<br>
 
 
 
