@@ -10,6 +10,7 @@ import {
 } from "../database/database";
 import { addBirdToCloud } from "../database/firebaseDatabase";
 import AutoCompleteInput from "../components/autoCompleteInput";
+import globalStyles from "../styles";
 
 
 export default function HomeScreen() {
@@ -56,8 +57,8 @@ export default function HomeScreen() {
 
   return (
     <View style={{ flex: 1 }}>
-      <View style={styles.inputContainer}>
-      <AutoCompleteInput inputStyle={styles.input} onBirdSelect={setInputValue} />
+      <View style={globalStyles.inputContainer}>
+      <AutoCompleteInput inputStyle={globalStyles.input} onBirdSelect={setInputValue} />
 
         <Button title="Add Bird" onPress={addBird} />
         <Button title="Clear Today's Birds" onPress={clearLocalBirds} />
@@ -72,14 +73,3 @@ export default function HomeScreen() {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  inputContainer: { padding: 20 },
-  input: {
-    borderWidth: 1,
-    borderColor: "#aaa",
-    borderRadius: 5,
-    padding: 10,
-    marginBottom: 10,
-  },
-});

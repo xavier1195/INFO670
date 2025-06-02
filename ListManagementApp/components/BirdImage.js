@@ -1,6 +1,7 @@
 import React from 'react';
 import { Image, StyleSheet, View } from 'react-native';
 import birdImagesData from '../database/birdImages';
+import globalStyles from "../styles";
 
 const birdImages = ({ birdname }) => {
     const getImagePath = () => {
@@ -21,29 +22,14 @@ const birdImages = ({ birdname }) => {
             : null;
 
             return localImage ? (
-                <Image source={localImage} style={styles.image} resizeMode='cover'/>
+                <Image source={localImage} style={globalStyles.image} resizeMode='cover'/>
             ) : (
-                <View style={styles.placeholder} />
+                <View style={globalStyles.placeholder} />
             );
         } catch (error) {
-            return <View style={styles.placeholder} />;
+            return <View style={globalStyles.placeholder} />;
         }
     };
 
-    const styles = StyleSheet.create({
-        image: {
-          width: 100,
-          height: 100,
-          borderRadius: 5,
-          marginTop: 5,
-        },
-        placeholder: {
-          width: 100,
-          height: 100,
-          backgroundColor: "#ccc",
-          borderRadius: 5,
-          marginTop: 5,
-        },
-      });
 
       export default BirdImage;

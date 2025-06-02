@@ -93,3 +93,12 @@ Navigate to Home screen.
 - audio for birds
 - ML audio to bird suggestion
 - gamification
+
+
+## notes
+
+### ML dataset
+- use nabirds dataset to create model for birds\
+    - use learned modeling by utilizing pre-trained image model as jumping off point: EfficientNetB0
+- challenge: unknown birds not in image dataset should be identifiable
+    - use eBird to grab descriptions of birds or another bird description dataset to help algo understand what to look for the used trained model to ingest the characteristics to determine potential birds...

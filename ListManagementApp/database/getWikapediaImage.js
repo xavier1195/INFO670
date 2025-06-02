@@ -1,5 +1,3 @@
-// database/getWikapediaImage.js
-
 export const getWikipediaImage = async (commonName) => {
     try {
       if (!commonName) return null;

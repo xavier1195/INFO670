@@ -1,13 +1,14 @@
 import React from "react";
 import { View, Text, StyleSheet, FlatList } from "react-native";
 import BirdListItem from "./BirdListItem.js";
+import globalStyles from "../styles";
 
 export default function BirdListView({ title, birds, emptyMessage, showTimestamp = true }) {
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>{title}</Text>
+    <View style={globalStyles.container}>
+      <Text style={globalStyles.title}>{title}</Text>
       {birds.length === 0 ? (
-        <Text style={styles.emptyList}>{emptyMessage}</Text>
+        <Text style={globalStyles.emptyList}>{emptyMessage}</Text>
       ) : (
         <FlatList
           data={birds}
@@ -19,19 +20,3 @@ export default function BirdListView({ title, birds, emptyMessage, showTimestamp
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 20,
-    backgroundColor: "#fff",
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 20,
-  },
-  emptyList: {
-    fontSize: 18,
-    color: "#888",
-  },
-});

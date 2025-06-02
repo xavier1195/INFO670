@@ -8,6 +8,8 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { getBirdSuggestions } from "../database/eBirdAPI";
+import globalStyles from "../styles";
+
 
 export default function autoCompleteInput({ onBirdSelect }) {
   const [suggestions, setSuggestions] = useState([]);
@@ -41,9 +43,9 @@ export default function autoCompleteInput({ onBirdSelect }) {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={globalStyles.container}>
       <TextInput
-        style={styles.input}
+        style={globalStyles.input}
         placeholder="Search for a bird..."
         value={query}
         onChangeText={handleInputChange}
@@ -54,7 +56,7 @@ export default function autoCompleteInput({ onBirdSelect }) {
           keyExtractor={(item) => item}
           renderItem={({ item }) => (
             <TouchableOpacity onPress={() => handleSelect(item)}>
-              <Text style={styles.suggestion}>{item}</Text>
+              <Text style={globalStyles.suggestion}>{item}</Text>
             </TouchableOpacity>
           )}
         />
@@ -63,21 +65,4 @@ export default function autoCompleteInput({ onBirdSelect }) {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    marginBottom: 10, // to match spacing between buttons
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: "#aaa",
-    borderRadius: 5,
-    padding: 10,
-    marginBottom: 10, // spacing below the text input
-  },
-  suggestion: {
-    padding: 10,
-    backgroundColor: "#f9f9f9",
-    borderBottomWidth: 1,
-    borderBottomColor: "#ccc",
-  },
-});
+

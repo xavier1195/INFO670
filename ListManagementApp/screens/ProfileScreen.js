@@ -17,6 +17,7 @@ import { createUser, loginUser, logoutUser } from "../database/userDatabase";
 import { getWikipediaImage } from "../database/getWikapediaImage";
 import { getScientificName } from "../database/getScientificName";
 import { AVAIABLE_FLOCKS } from "../components/constants/flocks";
+import globalStyles from "../styles";
 
 export default function ProfileScreen() {
   const [loggedInUser, setLoggedInUser] = useState(null);
@@ -131,27 +132,27 @@ export default function ProfileScreen() {
 
   if (loggedInUser) {
     return (
-      <View style={styles.container}>
-        <Text style={styles.title}>My Profile</Text>
-        <Text style={styles.label}>Username: <Text style={styles.value}>{loggedInUser.username}</Text></Text>
-        <Text style={styles.label}>Email: <Text style={styles.value}>{loggedInUser.email}</Text></Text>
-        <Text style={styles.label}>Favorite Bird: <Text style={styles.value}>{loggedInUser.favoriteBird}</Text></Text>
+      <View style={globalStyles.container}>
+        <Text style={globalStyles.title}>My Profile</Text>
+        <Text style={globalStyles.label}>Username: <Text style={globalStyles.value}>{loggedInUser.username}</Text></Text>
+        <Text style={globalStyles.label}>Email: <Text style={globalStyles.value}>{loggedInUser.email}</Text></Text>
+        <Text style={globalStyles.label}>Favorite Bird: <Text style={globalStyles.value}>{loggedInUser.favoriteBird}</Text></Text>
 
         {loadingBirdInfo ? (
           <ActivityIndicator />
         ) : birdImage ? (
-          <Image source={{ uri: birdImage }} style={styles.image} />
+          <Image source={{ uri: birdImage }} style={globalStyles.image} />
         ) : (
-          <View style={[styles.image, styles.placeholder]} />
+          <View style={[globalStyles.image, globalStyles.placeholder]} />
         )}
         {latinName && (
-          <Text style={styles.latinName}>{latinName}</Text>
+          <Text style={globalStyles.latinName}>{latinName}</Text>
         )}
 
-        <Text style={styles.label}>Flocks:</Text>
+        <Text style={globalStyles.label}>Flocks:</Text>
         {loggedInUser.flocks && loggedInUser.flocks.length > 0 ? (
           loggedInUser.flocks.map((flock) => (
-            <Text key={flock} style={styles.flockItem}>• {flock}</Text>
+            <Text key={flock} style={globalStyles.flockItem}>• {flock}</Text>
           ))
         ) : (
           <Text>No flocks selected.</Text>
@@ -163,43 +164,43 @@ export default function ProfileScreen() {
   }
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Create or Log In</Text>
+    <View style={globalStyles.container}>
+      <Text style={globalStyles.title}>Create or Log In</Text>
 
       <TextInput
-        style={styles.input}
+        style={globalStyles.input}
         placeholder="Username"
         value={username}
         onChangeText={setUsername}
       />
       <TextInput
-        style={styles.input}
+        style={globalStyles.input}
         placeholder="Email (for signup)"
         value={email}
         onChangeText={setEmail}
       />
       <TextInput
-        style={styles.input}
+        style={globalStyles.input}
         placeholder="Password"
         secureTextEntry
         value={password}
         onChangeText={setPassword}
       />
       <TextInput
-        style={styles.input}
+        style={globalStyles.input}
         placeholder="Favorite Bird"
         value={favoriteBird}
         onChangeText={setFavoriteBird}
       />
 
-      <Text style={styles.subTitle}>Choose Your Flocks</Text>
+      <Text style={globalStyles.subTitle}>Choose Your Flocks</Text>
       {AVAIABLE_FLOCKS.map((flock) => (
-        <View key={flock} style={styles.checkboxContainer}>
+        <View key={flock} style={globalStyles.checkboxContainer}>
           <Checkbox
             value={selectedFlocks.includes(flock)}
             onValueChange={() => toggleFlock(flock)}
           />
-          <Text style={styles.checkboxLabel}>{flock}</Text>
+          <Text style={globalStyles.checkboxLabel}>{flock}</Text>
         </View>
       ))}
 
@@ -210,52 +211,4 @@ export default function ProfileScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  container: { padding: 20, paddingTop: 60 },
-  title: { fontSize: 24, fontWeight: "bold", marginBottom: 30 },
-  subTitle: {
-    fontSize: 18,
-    fontWeight: "600",
-    marginTop: 20,
-    marginBottom: 10,
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: "#aaa",
-    borderRadius: 6,
-    padding: 12,
-    marginBottom: 15,
-  },
-  checkboxContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginBottom: 8,
-  },
-  checkboxLabel: {
-    marginLeft: 8,
-  },
-  label: { fontSize: 18, marginBottom: 4 },
-  value: { fontWeight: "bold" },
-  flockItem: {
-    fontSize: 16,
-    marginLeft: 10,
-    color: "#444",
-  },
-  image: {
-    width: 100,
-    height: 100,
-    borderRadius: 8,
-    marginVertical: 10,
-    backgroundColor: "#eee",
-  },
-  placeholder: {
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  latinName: {
-    fontSize: 14,
-    fontStyle: "italic",
-    color: "#555",
-    marginBottom: 20,
-  },
-});
+

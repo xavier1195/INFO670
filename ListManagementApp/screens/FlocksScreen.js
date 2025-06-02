@@ -75,6 +75,11 @@ setReplies(repliesObj);
     }
   };
 
+  // Helper to format a Firestore Timestamp
+  const formatTimestamp = (ts) => {
+    if (!ts || !ts.toDate) return "";
+    return ts.toDate().toLocaleString();
+  };
 
   return (
     <View style={styles.container}>
@@ -92,14 +97,19 @@ setReplies(repliesObj);
             renderItem={({ item }) => <FlockBirdItem bird={item} />}
           />
 
-          <Text style={styles.sectionTitle}>Flock Messages</Text>
+<Text style={styles.sectionTitle}>Flock Messages</Text>
           <FlatList
-  data={messages}
-  keyExtractor={(item) => item.id}
-  renderItem={({ item }) => (
-    <View style={styles.message}>
-      <Text style={styles.messageUser}>{item.username}:</Text>
-      <Text>{item.message}</Text>
+            data={messages}
+            keyExtractor={(item) => item.id}
+            renderItem={({ item }) => (
+              <View style={styles.message}>
+                <Text style={styles.messageUser}>
+                  {item.username} •{" "}
+                  <Text style={styles.timestamp}>
+                    {formatTimestamp(item.timestamp)}
+                  </Text>
+                </Text>
+                <Text style={styles.messageText}>{item.message}</Text>
 
       {/* Replies */}
       {replies[item.id]?.map((reply) => (
@@ -147,7 +157,7 @@ const styles = StyleSheet.create({
   message: {
     paddingVertical: 6,
     borderBottomWidth: 1,
-    borderBottomColor: "#ccc",
+    borderBottomColor: "#5f9ea0",
   },
   messageUser: {
     fontWeight: "bold",
@@ -155,7 +165,8 @@ const styles = StyleSheet.create({
   },
   input: {
     borderWidth: 1,
-    borderColor: "#aaa",
+    borderColor: "#5f9ea0",
+    color: "#5f9ea0",
     borderRadius: 5,
     padding: 10,
     marginTop: 10,
