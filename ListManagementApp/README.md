@@ -70,16 +70,16 @@ npm start
 ### To Use:
 Navigate to Home screen.
 
-1. type a bird name in the search box. Select a result from the dropdown.
-
-2. Click Add Bird to save it locally and remotely.
-
-3. Tap the ☰ hamburger menu to view the Database screen to see all saved birds.
-
-4. Go to Profile to create a user with username/email/favorite bird and join one or more Flocks.
-
-5. Visit the Flocks screen to see birds added by other users in the same flocks and see messages by others in your Flock (Use Ubran Birds when signing up to see prepopulated Flock)
-
+1. Click the hamburger menu on the top left and select Profile Screen<br>
+![image](https://github.com/user-attachments/assets/5d716e47-17c9-4ef6-b5e3-856f2fc13eb9)
+2. Create profile and select 'Urban Birds' Flock or another multiple<br>
+  ![image](https://github.com/user-attachments/assets/10670ebf-8533-4cfc-85d4-8535df5d8f05)
+3. Go to home screen and type a bird name in the search box. Select a result from the dropdown.<br>
+![image](https://github.com/user-attachments/assets/27d595d2-c471-43a5-b782-b2027444f6ae)
+4. Tap the ☰ hamburger menu to view the Database screen to see all saved birds.<br>
+![image](https://github.com/user-attachments/assets/686dc6b6-50ff-41bb-96b1-5a730af7cd70)
+5. Visit the Flocks screen to see birds added by other users in the same flocks and see messages by others in your Flock (Use Urban Birds when signing up to see prepopulated Flock)<br>
+![image](https://github.com/user-attachments/assets/44f1146a-91bf-400b-a1c2-2603d90509a8)
 
 ### Future State:
 - Update Autocomplete to possibly allow non-eBird birds
