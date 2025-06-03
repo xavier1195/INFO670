@@ -13,6 +13,8 @@ import { Modal, Portal, Card, Paragraph, Button } from "react-native-paper";
 import axios from "axios";
 import globalStyles from "../styles";
 
+const API_BASE_URL = "tux-mongo.cci.drexel.edu:27017";
+
 export default function BirdDetailModal({ visible, bird, onClose }) {
   const [traits, setTraits] = useState(null);
   const [loadingTraits, setLoadingTraits] = useState(false);
@@ -27,12 +29,9 @@ export default function BirdDetailModal({ visible, bird, onClose }) {
     setLoadingTraits(true);
     setError("");
 
-    // Adjust baseURL per platform
-    const baseURL =
-      Platform.OS === "android" ? "http://10.0.2.2:3000" : "http://localhost:3000";
 
     axios
-      .get(`${baseURL}/api/traits`, {
+      .get(`${API_BASE_URL}/api/traits`, {
         // **Send common_name** query param
         params: { common_name: bird.commonName },
       })
