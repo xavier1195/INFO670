@@ -1,4 +1,3 @@
-// components/BirdDetailModal.js
 import React, { useEffect, useState } from "react";
 import {
   View,
@@ -13,7 +12,7 @@ import { Modal, Portal, Card, Paragraph, Button } from "react-native-paper";
 import axios from "axios";
 import globalStyles from "../styles";
 
-const API_BASE_URL = "tux-mongo.cci.drexel.edu:27017";
+const API_BASE_URL = "http://node.cci.drexel.edu:9651";
 
 export default function BirdDetailModal({ visible, bird, onClose }) {
   const [traits, setTraits] = useState(null);
@@ -21,7 +20,6 @@ export default function BirdDetailModal({ visible, bird, onClose }) {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    // **Use commonName** instead of bird.name
     if (!bird?.commonName) {
       setTraits(null);
       return;
@@ -30,11 +28,10 @@ export default function BirdDetailModal({ visible, bird, onClose }) {
     setError("");
 
 
+const url = `${API_BASE_URL}/api/traits?common_name=${encodeURIComponent(bird.commonName)}`;
+console.log("Fetching traits from:", url);
     axios
-      .get(`${API_BASE_URL}/api/traits`, {
-        // **Send common_name** query param
-        params: { common_name: bird.commonName },
-      })
+      .get(url)
       .then((res) => {
         setTraits(res.data);
       })

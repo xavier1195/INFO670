@@ -8,6 +8,7 @@ import DatabaseScreen from "./screens/DatabaseScreen";
 import ProfileScreen from "./screens/ProfileScreen";
 import FlockBirdsScreen from "./screens/FlocksScreen";
 import GameScreen from './screens/GameScreen';
+import ImageRecognitionScreen from "./screens/ImageRecognitionScreen";
 
 const Drawer = createDrawerNavigator();
 
@@ -18,8 +19,9 @@ export default function App() {
       <Drawer.Navigator initialRouteName="Home">
         <Drawer.Screen name="Home" component={HomeScreen} />
         <Drawer.Screen name="Database" component={DatabaseScreen} />
-        <Drawer.Screen name="Flock Birds" component={FlockBirdsScreen} />
+        <Drawer.Screen name="Flocks" component={FlockBirdsScreen} />
 <Drawer.Screen name="Game Screen" component={GameScreen} options={{ title: 'Bird Race' }} />
+<Drawer.Screen name="Identfy Bird" component={ImageRecognitionScreen} options={{ title: 'Identify Bird' }} />
 
         <Drawer.Screen name="Profile" component={ProfileScreen} />
       </Drawer.Navigator>

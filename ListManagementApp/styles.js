@@ -26,6 +26,26 @@ export const FONT_SIZES = {
 
 export default StyleSheet.create({
   // your bird list / modal / image styles
+ headerIconsContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginRight: SPACING.base,
+  },
+
+  // Input area on Home
+  inputContainer: {
+    padding: SPACING.base,
+    backgroundColor: COLORS.background,
+  },
+
+  input: {
+    borderWidth: 1,
+    borderColor: COLORS.muted,
+    borderRadius: 5,
+    padding: SPACING.small,
+    marginBottom: SPACING.small,
+  },
+
   birdContainer: {
     marginBottom: 20,
   },
@@ -55,6 +75,7 @@ export default StyleSheet.create({
     borderRadius: 8,
     marginVertical: 10,
     backgroundColor: "#eee",
+    padding: 5,
   },
   placeholder: {
     justifyContent: "center",

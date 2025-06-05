@@ -1,4 +1,3 @@
-// components/BirdListItem.js
 import React, { useState, useEffect } from "react";
 import {
   View,
@@ -12,22 +11,10 @@ import { getWikipediaImage } from "../database/getWikapediaImage";
 import { getScientificName } from "../database/getScientificName";
 import globalStyles from "../styles";
 
-/**
- * Props:
- *   bird: {
- *     id: string,
- *     name: string,
- *     timestamp: FirestoreTimestamp or JS Date,
- *     date: string  // or whatever your bird object has for dateSeen
- *     ...anyotherfields
- *   }
- *   showTimestamp: boolean  (default true)
- *   onPress: function(birdWithDetails) → void
- */
 export default function BirdListItem({
   bird,
   showTimestamp = true,
-  onPress,          // new
+  onPress,
 }) {
   const [imageURL, setImageUrl] = useState(null);
   const [loadingImage, setLoading] = useState(true);
@@ -36,7 +23,7 @@ export default function BirdListItem({
 
   // Once image + sciName are both loaded, this function packages up details:
   const handleTap = () => {
-    // We only fire onPress if imageURL (or null) and sciName (or null) have finished loading.
+
     if (!loadingImage && !loadingScientificName && onPress) {
       onPress({
         id: bird.id,
@@ -44,8 +31,8 @@ export default function BirdListItem({
         dateSeen: bird.timestamp
           ? bird.timestamp.toDate().toLocaleString()
           : bird.date || null,
-        imageURL,           // may be null if not found
-        sciName: scientificName, // may be null if not found
+        imageURL,
+        sciName: scientificName,
       });
     }
   };
