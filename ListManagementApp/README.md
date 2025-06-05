@@ -14,9 +14,11 @@ This app is a simple list tool for a user to add the birds they have seen today 
 - Add Birds to List
 - Remove Last Bird
 - Clear all Birds from List
-- View Saved Birds in seperate Database Screen
+- View Saved Birds in separate Database Screen
 - Navigation using Hamburger
 - Storage using AsyncStorage
+- Storage via Firebase
+- Storage via MongoDB for bird traits
 
 ### Install and Setup
 
@@ -35,21 +37,31 @@ npx expo install react-native-gesture-handler react-native-reanimated react-nati
 npx expo install @react-native-async-storage/async-storage
 npx expo install expo-checkbox
 npm install firebase
+npm install react-native-image-picker
 
 # 4. Run the App
+connect to Drexel VPN
 npm start
 
 
 ### Structure:
 
 .<br>
-├── App.js                          # Entry point with drawer navigation<br>
+├── App.js                         # Entry point with drawer navigation<br>
 ├── firebaseConfig.js              # Firebase setup for Firestore<br>
+├── styles.js                      # Global styling<br>
+├── assets                         # images
 
 ├── /components<br>
 │   ├── BirdListView.js            # Displays bird list<br>
 │   ├── FlockBirdItem.js           # Individual bird card in Flocks<br>
 │   ├── autoCompleteInput.js       # eBird-based search dropdown<br>
+│   ├── BirdAvatar.js              # TDB - user within game<br>
+│   ├── BirdDetailModal.js         # Bird Traits from MongoDB/Connects to node<br>
+│   ├── BirdImage.js               # Global call for images of birds<br>
+│   ├── BirdViewList.js            # diplays birds list master<br>
+│   ├── GameEngine.js              # TBD - runs game<br>
+│   ├── Obstacle.js                # TBD - Object in game<br>
 
 ├── /database<br>
 │   ├── database.js                # AsyncStorage for local storage<br>
@@ -58,19 +70,24 @@ npm start
 │   ├── getFlockBirds.js           # Retrieves birds from user's flocks<br>
 │   ├── getScientificName.js       # Gets Latin names from eBird<br>
 │   └── getWikapediaImage.js       # Gets images from Wikipedia<br>
+│   └── flockMessages.js           # Stores and sends messages<br>
+│   └── getBirdTraits.js           # Not used... I think<br>
+│   └── userDatabase.js            # Stores and send users to database<br>
 
 ├── /screens<br>
 │   ├── HomeScren.js              # Main input screen<br>
 │   ├── DatabaseScreen.js          # View all birds logged<br>
 │   ├── ProfileScreen.js           # User login/signup and preferences<br>
 │   └── FlocksScreen.js            # See your Flock's birds and messages<br>
+│   └── GameScreen.js              # TDB - plays game with birds (WIP)<br>
+│   └── ImageRecognitionSceen.js   # Upload image - run python model<br>
 
 
 
 ### To Use:
 Navigate to Home screen.
 
-1. Click the hamburger menu on the top left and select Profile Screen<br>
+1. Click the hamburger menu on the top left and select Profile Screen which uses firebase to read and write to a nosql database<br>
 ![image](https://github.com/user-attachments/assets/5d716e47-17c9-4ef6-b5e3-856f2fc13eb9)
 2. Create profile and select 'Urban Birds' Flock or another multiple<br>
   ![image](https://github.com/user-attachments/assets/10670ebf-8533-4cfc-85d4-8535df5d8f05)
@@ -78,8 +95,15 @@ Navigate to Home screen.
 ![image](https://github.com/user-attachments/assets/27d595d2-c471-43a5-b782-b2027444f6ae)
 4. Tap the ☰ hamburger menu to view the Database screen to see all saved birds.<br>
 ![image](https://github.com/user-attachments/assets/686dc6b6-50ff-41bb-96b1-5a730af7cd70)
-5. Visit the Flocks screen to see birds added by other users in the same flocks and see messages by others in your Flock (Use Urban Birds when signing up to see prepopulated Flock)<br>
+5. Click on a bird to bring up a module that calls MongoDB using Express via Node for more bird information (reading from a nosql database)<br>
+![Screenshot 2025-06-04 at 8 11 33 PM](https://github.com/user-attachments/assets/3ee962b3-f0b2-4ceb-904f-7522dd4eed2f)
+6. Visit the Flocks screen to see birds added by other users in the same flocks and see messages by others in your Flock (Use Urban Birds when signing up to see prepopulated Flock)<br>
 ![image](https://github.com/user-attachments/assets/44f1146a-91bf-400b-a1c2-2603d90509a8)
+7. Added Game Screen (still in development) - Idea is to take the values about birds (mass, wing length, etc.) to have them compete in obstacal courses.<br>
+![Screenshot 2025-06-04 at 8 14 06 PM](https://github.com/user-attachments/assets/87c5df8a-2688-4691-b657-f83492f4ac54)
+8. Added Image Recognition Sceeen (model is performing at ~86% accuracy on a limited dataset [50k images/222 species]. Currently working to get app to call script and return guess. Future state will be storing images to add to the database of images (somehow getting accurate bird info) and training on new images and birds.<br>
+![Screenshot 2025-06-04 at 8 15 17 PM](https://github.com/user-attachments/assets/7f3fa8a7-5259-4b0d-be34-cfd0a739076b)
+
 
 ### Future State:
 - Update Autocomplete to possibly allow non-eBird birds
