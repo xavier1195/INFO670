@@ -1,6 +1,4 @@
-// screens/ImageRecognitionScreen.js
-
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -11,48 +9,69 @@ import {
   Platform,
   Alert,
 } from "react-native";
-import { launchImageLibrary } from "react-native-image-picker";
+import * as ImagePicker from "expo-image-picker";
 import axios from "axios";
 import globalStyles from "../styles";
 
 export default function ImageRecognitionScreen() {
   const [photoUri, setPhotoUri] = useState(null);
+  const [selectedFile, setSelectedFile] = useState(null);
   const [uploading, setUploading] = useState(false);
-  const [prediction, setPrediction] = useState(null); // { bird: string, confidence: number }
+  const [prediction, setPrediction] = useState(null);
   const [error, setError] = useState("");
 
-  // Change this if your backend is on a different host/port:
-  const API_BASE_URL = "http://node.cci.drexel.edu:9651";
+  // NOTE: point this at the *root* of your function
+  const FUNCTION_URL =
+    "https://us-east1-birdsiveseen-834d2.cloudfunctions.net/predict2";
 
-  // 1) Let user pick an image from their library
-  const selectImage = () => {
+  useEffect(() => {
+    (async () => {
+      if (Platform.OS !== "web") {
+        const { status } =
+          await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if (status !== "granted") {
+          Alert.alert(
+            "Permission required",
+            "This app needs photo library access to pick bird images."
+          );
+        }
+      }
+    })();
+  }, []);
+
+  const selectImage = async () => {
     setError("");
     setPrediction(null);
 
-    launchImageLibrary(
-      {
-        mediaType: "photo",
-        maxWidth: 800,
-        maxHeight: 800,
+    try {
+      const result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
         quality: 0.8,
-      },
-      (response) => {
-        if (response.didCancel) {
-          // User cancelled
-          return;
-        } else if (response.errorCode) {
-          Alert.alert("Image Picker Error", response.errorMessage || "Unknown error");
-        } else if (response.assets && response.assets.length > 0) {
-          const asset = response.assets[0];
-          setPhotoUri(asset.uri);
-        }
-      }
-    );
+        allowsEditing: false,
+      });
+
+      if (result.canceled) return;
+
+      // Expo 49+: result.assets is an array
+      const asset = result.assets?.[0] ?? result;
+      const uri = asset.uri;
+      if (!uri) throw new Error("Could not get URI from picker");
+
+      const name = uri.split("/").pop();
+      // infer type from extension
+      const extMatch = /\.(\w+)$/.exec(name);
+      const ext = extMatch ? extMatch[1].toLowerCase() : "jpg";
+      const type = `image/${ext === "jpg" ? "jpeg" : ext}`;
+
+      setPhotoUri(uri);
+      setSelectedFile({ uri, name, type });
+    } catch (e) {
+      Alert.alert("Error opening image picker", e.message);
+    }
   };
 
-  // 2) Upload the selected image to /api/predict
   const uploadImageForPrediction = async () => {
-    if (!photoUri) {
+    if (!selectedFile) {
       Alert.alert("No image selected", "Please pick a photo first.");
       return;
     }
@@ -62,34 +81,34 @@ export default function ImageRecognitionScreen() {
     setError("");
 
     try {
-      // Prepare a FormData object with the image file
       const formData = new FormData();
-      // On iOS the URI might be "file://...", on Android "content://..."
-      // We need to extract filename and mime type:
-      const uriParts = photoUri.split("/");
-      const fileName = uriParts[uriParts.length - 1];
-      let fileType = "image/jpeg";
-      if (fileName.toLowerCase().endsWith(".png")) fileType = "image/png";
-
-      formData.append("photo", {
-        uri: photoUri,
-        name: fileName,
-        type: fileType,
+      formData.append("file", {
+        uri: selectedFile.uri,
+        name: selectedFile.name,
+        type: selectedFile.type,
       });
 
-      // Make POST request
-      const url = `${API_BASE_URL}/api/predict`;
-      const res = await axios.post(url, formData, {
+      const res = await axios.post(FUNCTION_URL, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
+          Accept: "application/json",
         },
+        timeout: 30000,
       });
 
-      // Expecting { bird: string, confidence: number } from the backend
-      setPrediction(res.data);
+      // The function will return { predicted_class, confidence }
+      const { predicted_class, confidence } = res.data;
+      if (!predicted_class) {
+        throw new Error("Invalid response from server");
+      }
+
+      setPrediction({ bird: predicted_class, confidence });
     } catch (err) {
-      console.warn("Upload / prediction error:", err.message || err);
-      setError("Failed to get prediction. Please try again.");
+      console.warn("Upload / prediction error:", err);
+      let msg = "Failed to get prediction. Please try again.";
+      if (err.response?.data?.detail) msg = err.response.data.detail;
+      else if (err.message) msg = err.message;
+      setError(msg);
     } finally {
       setUploading(false);
     }
@@ -142,9 +161,7 @@ export default function ImageRecognitionScreen() {
         </View>
       )}
 
-      {!!error && (
-        <Text style={styles.errorText}>{error}</Text>
-      )}
+      {!!error && <Text style={styles.errorText}>{error}</Text>}
     </View>
   );
 }
@@ -162,13 +179,8 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: "#4B0082",
   },
-  buttonContainer: {
-    marginVertical: 8,
-  },
-  previewContainer: {
-    marginTop: 16,
-    alignItems: "center",
-  },
+  buttonContainer: { marginVertical: 8 },
+  previewContainer: { marginTop: 16, alignItems: "center" },
   label: {
     fontSize: 16,
     marginBottom: 8,
@@ -180,10 +192,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     backgroundColor: "#eee",
   },
-  loadingContainer: {
-    marginTop: 24,
-    alignItems: "center",
-  },
+  loadingContainer: { marginTop: 24, alignItems: "center" },
   loadingText: {
     marginTop: 8,
     fontSize: 16,
@@ -201,10 +210,7 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     color: globalStyles.text || "#333",
   },
-  boldText: {
-    fontWeight: "bold",
-    color: "#4B0082",
-  },
+  boldText: { fontWeight: "bold", color: "#4B0082" },
   errorText: {
     marginTop: 16,
     fontSize: 16,
