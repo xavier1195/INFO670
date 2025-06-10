@@ -14,11 +14,13 @@ This app is a simple list tool for a user to add the birds they have seen today 
 - Add Birds to List
 - Remove Last Bird
 - Clear all Birds from List
-- View Saved Birds in separate Database Screen
+- View Saved Birds in seperate Database Screen
 - Navigation using Hamburger
 - Storage using AsyncStorage
-- Storage via Firebase
-- Storage via MongoDB for bird traits
+- Cloud storage via Firebase
+- MongoDB integration for bird traits
+- Profile and Flocks screens
+- Game and Image Recognition modules
 
 ### Install and Setup
 
@@ -37,31 +39,53 @@ npx expo install react-native-gesture-handler react-native-reanimated react-nati
 npx expo install @react-native-async-storage/async-storage
 npx expo install expo-checkbox
 npm install firebase
+npx expo install expo-checkbox
 npm install react-native-image-picker
+npm install axios
+npm install react-native-document-picker react-native-paper react-native-vector-icons
+npx expo install expo-image-picker
+
 
 # 4. Run the App
 connect to Drexel VPN
 npm start
+a
 
+### API Connections and Dependencies
+This project interacts with multiple APIs and relies on various React Native packages.
+
+**API Connections**
+- Firebase Firestore for cloud storage
+- Cornell Lab's eBird API for bird suggestions and scientific names
+- Node/Express API at http://node.cci.drexel.edu:9651 for bird trait data
+- Wikipedia REST API for bird images
+- Google Cloud Function for running image recognition model and returning JSON prediction (WIP)
+
+**Key Dependencies**
+- firebase, axios
+- @react-navigation/native, @react-navigation/drawer
+- react-native-gesture-handler, react-native-reanimated, react-native-screens, react-native-safe-area-context, @react-native-masked-view/masked-view
+- @react-native-async-storage/async-storage, expo-checkbox
+- react-native-image-picker, react-native-document-picker, expo-image-picker
+- react-native-paper, react-native-vector-icons
 
 ### Structure:
 
 .<br>
-├── App.js                         # Entry point with drawer navigation<br>
+├── App.js                          # Entry point with drawer navigation<br>
 ├── firebaseConfig.js              # Firebase setup for Firestore<br>
-├── styles.js                      # Global styling<br>
-├── assets                         # images
 
 ├── /components<br>
 │   ├── BirdListView.js            # Displays bird list<br>
-│   ├── FlockBirdItem.js           # Individual bird card in Flocks<br>
+│   ├── BirdListItem.js            # Single bird item<br>
+│   ├── FlockBirdItem.js           # Birds within flocks<br>
 │   ├── autoCompleteInput.js       # eBird-based search dropdown<br>
-│   ├── BirdAvatar.js              # TDB - user within game<br>
-│   ├── BirdDetailModal.js         # Bird Traits from MongoDB/Connects to node<br>
-│   ├── BirdImage.js               # Global call for images of birds<br>
-│   ├── BirdViewList.js            # diplays birds list master<br>
+│   ├── BirdAvatar.js              # Game avatar (WIP)<br>
+│   ├── BirdDetailModal.js         # Bird traits from MongoDB<br>
+│   ├── BirdImage.js               # Handles bird images<br>
+│   ├── BirdRace.js                # Game component<br>
 │   ├── GameEngine.js              # TBD - runs game<br>
-│   ├── Obstacle.js                # TBD - Object in game<br>
+│   └── Obstacle.js                # TBD - game object<br>
 
 ├── /database<br>
 │   ├── database.js                # AsyncStorage for local storage<br>
@@ -69,18 +93,19 @@ npm start
 │   ├── eBirdAPI.js                # eBird autocomplete integration<br>
 │   ├── getFlockBirds.js           # Retrieves birds from user's flocks<br>
 │   ├── getScientificName.js       # Gets Latin names from eBird<br>
-│   └── getWikapediaImage.js       # Gets images from Wikipedia<br>
-│   └── flockMessages.js           # Stores and sends messages<br>
-│   └── getBirdTraits.js           # Not used... I think<br>
-│   └── userDatabase.js            # Stores and send users to database<br>
+│   ├── getWikapediaImage.js       # Gets images from Wikipedia<br>
+│   ├── flockMessages.js           # Stores and sends messages<br>
+│   ├── getBirdTraits.js           # Bird trait data via Node/MongoDB<br>
+│   └── userDatabase.js            # User accounts via Firebase<br>
+
 
 ├── /screens<br>
-│   ├── HomeScren.js              # Main input screen<br>
+│   ├── HomeScreen.js              # Main input screen<br>
 │   ├── DatabaseScreen.js          # View all birds logged<br>
-│   ├── ProfileScreen.js           # User login/signup and preferences<br>
-│   └── FlocksScreen.js            # See your Flock's birds and messages<br>
-│   └── GameScreen.js              # TDB - plays game with birds (WIP)<br>
-│   └── ImageRecognitionSceen.js   # Upload image - run python model<br>
+│   ├── ProfileScreen.js           # User login/signup<br>
+│   ├── FlocksScreen.js            # View flocks and messages<br>
+│   ├── GameScreen.js              # WIP game screen<br>
+│   └── ImageRecognitionScreen.js  # Upload and classify images<br>
 
 
 
@@ -118,7 +143,6 @@ Navigate to Home screen.
 - ML audio to bird suggestion
 - gamification
 
-
 ## notes
 
 ### ML dataset
@@ -126,3 +150,5 @@ Navigate to Home screen.
     - use learned modeling by utilizing pre-trained image model as jumping off point: EfficientNetB0
 - challenge: unknown birds not in image dataset should be identifiable
     - use eBird to grab descriptions of birds or another bird description dataset to help algo understand what to look for the used trained model to ingest the characteristics to determine potential birds...
+
+/Users/franpoeske/Desktop/Drexel MSIS/INFO670/birds/bird_classifier_model_fa.pkl

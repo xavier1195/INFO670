@@ -20,7 +20,7 @@ export const addFlockMessage = async (flock, messageText) => {
   });
 };
 
-// Get all messages for a flock, ordered by timestamp
+
 export const getFlockMessages = async (flock) => {
   const flockRef = collection(db, "flocks", flock, "messages");
   const q = query(flockRef, orderBy("timestamp", "desc"));
