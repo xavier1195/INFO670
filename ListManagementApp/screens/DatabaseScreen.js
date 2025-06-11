@@ -41,7 +41,6 @@ export default function DatabaseScreen() {
             bird={item}
             showTimestamp={true}
             onPress={handlePressRow}
-            // BirdListItem will call onPress({ id, commonName, dateSeen, imageURL, sciName })
           />
         )}
         ListEmptyComponent={() => (
