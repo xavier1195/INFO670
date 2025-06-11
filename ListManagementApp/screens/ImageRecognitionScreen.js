@@ -22,7 +22,7 @@ export default function ImageRecognitionScreen() {
 
   // NOTE: point this at the *root* of your function
   const FUNCTION_URL =
-    "https://us-east1-birdsiveseen-834d2.cloudfunctions.net/predict2";
+    "https://us-central1-birdsiveseen-834d2.cloudfunctions.net/predict_entrypoint";
 
   useEffect(() => {
     (async () => {
