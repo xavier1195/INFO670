@@ -3,7 +3,7 @@
 ## Bird's I've Seen Today App
 
 ### Application Purpose:
-This application is designed to allow a user to input birds they have seen throughout the day into a running list. They are able to add and remove birds from the list. The current day list displays bird name and time list item was added. It also connects to an external database which allows the user to see a running lists of every bird they have inputed using the app and displays them in an addtional screen called 'database'. This will show the user the bird name and timestamp for easy bird tracking.
+This application is designed to allow a user to input birds they have seen throughout the day into a running list. They are able to add and remove birds from the list. The current day list displays the bird name and the time the list item was added. It also connects to an external database, which allows the user to see a running list of every bird they have input using the app and displays them in an additional screen called 'database'. This will show the user the bird name and timestamp for easy bird tracking. The application also contains communities known as 'flocks'. Here, users can interact with each other by sending messages and seeing other users' most recent bird log. You can also play games (in beta), bird race which takes values from our bird trait database (wing legnth and mass) and calculate the birds speed and bird survival which calculate allows you to select a bird to compete against a random bird from your database and has a winner based on a variety of scenarios. Finally, you can upload a bird image and use our image recognition model to determine what type of bird it is (beta).
 
 ### Target Audience:
 This application is design for Andriod users with a passion for bird watching. The current design is a simple bird list that connects to external database, future version may connect to existing bird databases for easier bird find/autocomplete, additional bird information such as latin name and location.
@@ -74,6 +74,9 @@ This project interacts with multiple APIs and relies on various React Native pac
 .<br>
 ├── App.js                          # Entry point with drawer navigation<br>
 ├── firebaseConfig.js              # Firebase setup for Firestore<br>
+├── styles.js                      # Global styling<br>
+├── assets                         # folder for images<br>
+
 
 ├── /components<br>
 │   ├── BirdListView.js            # Displays bird list<br>
@@ -86,6 +89,7 @@ This project interacts with multiple APIs and relies on various React Native pac
 │   ├── BirdRace.js                # Game component<br>
 │   ├── GameEngine.js              # TBD - runs game<br>
 │   └── Obstacle.js                # TBD - game object<br>
+│   └── SurvivalGame.js            # module for bird survival game based on random environment (desert/forest/etc) and different metrics based on the bird and its ability in that environment <br>
 
 ├── /database<br>
 │   ├── database.js                # AsyncStorage for local storage<br>
@@ -124,10 +128,14 @@ Navigate to Home screen.
 ![Screenshot 2025-06-04 at 8 11 33 PM](https://github.com/user-attachments/assets/3ee962b3-f0b2-4ceb-904f-7522dd4eed2f)
 6. Visit the Flocks screen to see birds added by other users in the same flocks and see messages by others in your Flock (Use Urban Birds when signing up to see prepopulated Flock)<br>
 ![image](https://github.com/user-attachments/assets/44f1146a-91bf-400b-a1c2-2603d90509a8)
-7. Added Game Screen (still in development) - Idea is to take the values about birds (mass, wing length, etc.) to have them compete in obstacal courses.<br>
-![Screenshot 2025-06-04 at 8 14 06 PM](https://github.com/user-attachments/assets/87c5df8a-2688-4691-b657-f83492f4ac54)
-8. Added Image Recognition Sceeen (model is performing at ~86% accuracy on a limited dataset [50k images/222 species]. Currently working to get app to call script and return guess. Future state will be storing images to add to the database of images (somehow getting accurate bird info) and training on new images and birds.<br>
-![Screenshot 2025-06-04 at 8 15 17 PM](https://github.com/user-attachments/assets/7f3fa8a7-5259-4b0d-be34-cfd0a739076b)
+7. Added Game Screen - Two games: Bird race (Mass & Weight = bird speed calculation) and Bird Survival (Five Environments: Desert, Mountain, Forest, Beach, Jungle & Multitude of bird attribute calculations with weights to determine winner)<br>
+![Screenshot 2025-06-11 at 10 29 25 PM](https://github.com/user-attachments/assets/0208f284-3732-4714-a7d2-bfee6d79049f)
+![Screenshot 2025-06-11 at 10 31 01 PM](https://github.com/user-attachments/assets/16d042b6-94c0-4a8a-92f3-ca48b21be230)
+![Screenshot 2025-06-11 at 10 31 09 PM](https://github.com/user-attachments/assets/336711f3-a131-4a85-89a0-dbc1d2574802)
+![Screenshot 2025-06-11 at 10 30 26 PM](https://github.com/user-attachments/assets/c2dec41f-c98a-434b-92cc-ec5623e33563)
+
+9. Added Image Recognition Screen (model is performing at ~86% accuracy on a limited dataset [50k images/222 species]. Model runs but confidence is subpar, need to check py script and/or enhance model<br>
+![Screenshot 2025-06-11 at 10 25 43 PM](https://github.com/user-attachments/assets/38d9cb00-173a-4d74-ae52-a06fc7f142f0)
 
 
 ### Future State:
@@ -136,12 +144,10 @@ Navigate to Home screen.
 - Possibility to create a bird and add information to database AND suplment that into the dropdown autocomplete
 - Bird states, number of 'seen', historical context related birds ect.
 - notifications for sightings within your 'flock'
-- peer to peer messaging and collaboration
+- peer-to-peer messaging and collaboration
 - Add location
-- ML name suggestions based on bird photo upload
 - audio for birds
 - ML audio to bird suggestion
-- gamification
 
 ## notes
 
