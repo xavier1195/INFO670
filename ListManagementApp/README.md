@@ -10,6 +10,20 @@ This application is design for Andriod users with a passion for bird watching. T
 
 This app is a simple list tool for a user to add the birds they have seen today to their list. They can add and remove birds.
 
+### Server API
+
+- eBird: Get bird common name and Latin name - used for autocomplete search and names
+- Firebase: GET/POST user data (username, password, email, favorite bird, community flock, messages, user bird database)
+- MongoDB: GET bird traits/characteristics (Mass, Wing Length, Beak Size, Environment, Trophic (omnivore, carnivore, etc))
+- Google Cloud Functions: GET bird image recognition prediction and confidence score, and POST bird image to serve up to the model.
+- Wikipedia: GET bird image based on eBird common name.
+
+### Experiences
+
+- Learned: React Native, NoSQL database management, and running scripts via the cloud. 
+- Key Takeaways: using SOLID coding principles and understanding where we wanted to take the design, so we could grow the app efficiently. Test APIs outside of the app environment to ensure they are up and running before jumping right into the React code.
+- Challenges: Getting server APIs up and running correctly was the most difficult part. Understanding how a Python script runs and the various requirements to ensure a smooth connection to the app. Designing at scale due to React Native's styling out-of-box limitations.
+
 ### Features
 - Add Birds to List
 - Remove Last Bird
